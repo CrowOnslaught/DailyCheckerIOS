@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		988B68822D3C46590029C2B9 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988B68812D3C46570029C2B9 /* Date.swift */; };
+		988B68842D3C467E0029C2B9 /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988B68832D3C467B0029C2B9 /* DateComponents.swift */; };
 		98FD7ED62D2D9A89000F86CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98FD7ECB2D2D9A89000F86CC /* Preview Assets.xcassets */; };
 		98FD7ED72D2D9A89000F86CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98FD7ECE2D2D9A89000F86CC /* Assets.xcassets */; };
 		98FD7ED92D2D9A89000F86CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD7ECD2D2D9A89000F86CC /* AppDelegate.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		988B68812D3C46570029C2B9 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		988B68832D3C467B0029C2B9 /* DateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponents.swift; sourceTree = "<group>"; };
 		98FD7E962D2D8A4E000F86CC /* DailyChecker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyChecker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98FD7EAA2D2D8A50000F86CC /* DailyCheckerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyCheckerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98FD7EB42D2D8A50000F86CC /* DailyCheckerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyCheckerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		988B68802D3C46470029C2B9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				988B68832D3C467B0029C2B9 /* DateComponents.swift */,
+				988B68812D3C46570029C2B9 /* Date.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		98FD7E8D2D2D8A4E000F86CC = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +141,7 @@
 				98FD7ED42D2D9A89000F86CC /* Item.swift */,
 				98FD7EEA2D2DE55C000F86CC /* Components */,
 				98FD7ECC2D2D9A89000F86CC /* Preview Content */,
+				988B68802D3C46470029C2B9 /* Extensions */,
 				98FD7ED02D2D9A89000F86CC /* SupportingFiles */,
 				98FD7ED22D2D9A89000F86CC /* DailyChecker.entitlements */,
 				98FD7ED32D2D9A89000F86CC /* Info.plist */,
@@ -304,6 +318,8 @@
 			files = (
 				98FD7ED92D2D9A89000F86CC /* AppDelegate.swift in Sources */,
 				98FD7EEC2D2DE57D000F86CC /* CustomTimePicker.swift in Sources */,
+				988B68822D3C46590029C2B9 /* Date.swift in Sources */,
+				988B68842D3C467E0029C2B9 /* DateComponents.swift in Sources */,
 				98FD7EDA2D2D9A89000F86CC /* DailyCheckerApp.swift in Sources */,
 				98FD7EDB2D2D9A89000F86CC /* ContentView.swift in Sources */,
 				98FD7EDC2D2D9A89000F86CC /* Item.swift in Sources */,
@@ -371,7 +387,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherwood.sherwood;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onslaught.dailychecker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -411,7 +427,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherwood.sherwood;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onslaught.dailychecker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -459,6 +475,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KN9SYTDDAF;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -522,6 +539,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = KN9SYTDDAF;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

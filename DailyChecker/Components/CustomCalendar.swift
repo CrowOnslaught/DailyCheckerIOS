@@ -12,10 +12,16 @@ import HorizonCalendar
 struct CustomCalendar: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) var colorScheme
-
+    
     let startDate: Date
-
+    
+    @State private var selectedDate: Int?
     @State private var showingConfirmation = false
+    @Query private var items: [Item]
+    
+    var didCheckToday: Bool {
+        (items.first(where: {$0.timestamp.isToday()}) != nil)
+    }
     
     private let calendar = Calendar.current
     private let today: DateComponents
@@ -26,6 +32,22 @@ struct CustomCalendar: View {
         
         let t = Date()
         self.today = calendar.dateComponents([.day, .month, .year], from: t as Date)
+    }
+    
+    private var actionButton: some View {
+        Button {
+            self.showingConfirmation = true
+        } label: {
+            Text(didCheckToday ? "Checked!" : "Check today")
+                .font(.system(size: 20))
+                .foregroundStyle(Color.white)
+                .fontWeight(.black)
+                .textCase(.uppercase)
+                .padding(.top, 32)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .background(didCheckToday ? Color.gray.gradient : Color.mint.gradient)
+        }
+        .disabled(didCheckToday)
     }
    
     var body: some View {
@@ -39,29 +61,45 @@ struct CustomCalendar: View {
                 dataDependency: nil
             )
             .days { day in
-                Text("\(day.day)")
-                    .foregroundStyle(dayColor(day.components))
-                    .fontWeight(dayWeight(day.components))
-                    .onTapGesture {
-                        print(day.day)
+                ZStack {
+                    Text("\(day.day)")
+                        .foregroundStyle(dayColor(day.components))
+                        .fontWeight(dayWeight(day.components))
+                        .onTapGesture {
+                            print(day.day)
+                            withAnimation {
+                                if selectedDate == day.day {
+                                    self.selectedDate = nil
+                                } else {
+                                    self.selectedDate = day.day
+                                }
+                            }
+                        }
+
+                    if selectedDate == day.day, let date = items.first(where: {day.components.isSameDay(of: $0.timestamp)}) {
+                        Text(date.timestamp.formatDate("dd/MM"))
+                            .offset(y: 16)
                     }
+                }
+                   
             }
             .layoutMargins(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
            .padding(.horizontal, 16)
-           .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            Text("\(self.selectedDate ?? 0)")
             
-            Button {
-                self.showingConfirmation = true
-            } label: {
-                Text("Check today")
-                    .font(.system(size: 20))
-                    .foregroundStyle(Color.white)
-                    .fontWeight(.black)
-                    .textCase(.uppercase)
-                    .padding(.top, 32)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(Color.mint)
+            if didCheckToday {
+                Text("CHECK!")
+                    .help("check")
             }
+            
+            ForEach(items, id: \.id) { item in
+                Text(item.timestamp.formatDate("hh:mm a"))
+                    .padding()
+                    .background(item.timestamp.isToday() ? Color.mint : Color.blue)
+            }
+            
+            actionButton
         }
         .confirmationDialog("Confirm today's check", isPresented: $showingConfirmation) {
             Button("Confirm") { onConfirm() }
@@ -70,26 +108,28 @@ struct CustomCalendar: View {
             Text("Confirm today's check")
         }
     }
-            
+}
+
+extension CustomCalendar {
     private func onConfirm() {
         modelContext.insert(Item(timestamp: Date()))
     }
-    
+
     private func dayColor(_ day: DateComponents) -> Color {
         if day > today {
             return .gray
         } else if day < today {
             return colorScheme == .dark ? .white : .black
         } else {
-            return .blue
+            return .mint
         }
     }
-    
+
     private func dayWeight (_ day: DateComponents) -> Font.Weight {
         if day > today || day < today {
             return .thin
         }
-        
+
         return .black
     }
 }
@@ -97,33 +137,4 @@ struct CustomCalendar: View {
 #Preview {
     CustomCalendar()
         .modelContainer(for: Item.self, inMemory: true)
-}
-
-extension Date {
-    var hour: Int { Calendar.current.component(.hour, from: self) }
-    var minute: Int { Calendar.current.component(.minute, from: self) }
-    
-    func formatDate(_ format: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
-    }
-    
-    func isSameDay(of otherDate: Date) -> Bool {
-        let components = Calendar.current.dateComponents([.day, .year, .month], from: self)
-        let otherDateComponents = Calendar.current.dateComponents([.day, .year, .month], from: otherDate)
-
-        return (components.day == otherDateComponents.day && components.month == otherDateComponents.month && components.year == otherDateComponents.year)
-    }
-    func isToday() -> Bool {
-        return isSameDay(of: Date())
-    }
-}
-
-extension DateComponents: @retroactive Comparable {
-    public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
-        let now = Date()
-        let calendar = Calendar.current
-        return calendar.date(byAdding: lhs, to: now)! < calendar.date(byAdding: rhs, to: now)!
-    }
 }

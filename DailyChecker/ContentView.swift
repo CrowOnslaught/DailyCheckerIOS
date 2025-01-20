@@ -38,7 +38,6 @@ struct ContentView: View {
                 )
             }
             .padding(.horizontal, 32)
-
         }
     }
     
@@ -54,8 +53,10 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    NavigationStack {
+        ContentView()
+            .modelContainer(for: Item.self, inMemory: true)
+    }
 }
 
 
